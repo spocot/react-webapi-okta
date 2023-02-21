@@ -7,7 +7,7 @@ import './custom.css';
 import Home from './components/Home';
 import { FetchData } from './components/FetchData';
 import { SecureRoute } from './components/SecureRoute';
-import { ProtectedFetchData } from './components/ProtectedFetchData';
+import ProtectedFetchData from './components/ProtectedFetchData';
 
 const oktaAuth = new OktaAuth({
     issuer: process.env.REACT_APP_OKTA_ISSUER,
