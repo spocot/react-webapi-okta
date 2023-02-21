@@ -1,6 +1,22 @@
+using Okta.AspNetCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = OktaDefaults.ApiAuthenticationScheme;
+    options.DefaultChallengeScheme = OktaDefaults.ApiAuthenticationScheme;
+    options.DefaultSignInScheme = OktaDefaults.ApiAuthenticationScheme;
+}).AddOktaWebApi(new OktaWebApiOptions()
+{
+    OktaDomain = builder.Configuration["Okta:OktaDomain"],
+    AuthorizationServerId = builder.Configuration["Okta:AuthorizationServerId"],
+    Audience = builder.Configuration["Okta:Audience"]
+});
+
+builder.Services.AddAuthorization();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -23,9 +39,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
-
 app.UseCors("AllowAll");
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 

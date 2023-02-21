@@ -13,7 +13,7 @@ function ProtectedFetchData() {
         console.log(authState);
         fetch('https://localhost:7215/protectedweatherforecast', {
             headers: {
-                Authorization: 'Bearer ' + authState.accessToken
+                Authorization: 'Bearer ' + authState.accessToken.accessToken
             }
         }).then((r) => r.json()).then((data) => {
             console.log(data);
